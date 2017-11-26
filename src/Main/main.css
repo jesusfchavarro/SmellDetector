@@ -1,0 +1,9 @@
+.root {
+    -fx-pref-height: 500;
+    -fx-pref-height: 500;
+}
+
+.split-pane{
+    -fx-pref-width: 50%;
+    -fx-pref-height: 55%;
+}
