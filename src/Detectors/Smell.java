@@ -1,29 +1,30 @@
 package Detectors;
 
+import org.antlr.v4.runtime.Token;
+
 @SuppressWarnings({"unused", "unchecked", "WeakerAccess"})
 public class Smell {
     int row;
     int col;
     String description;
-    String url = "https://refactoring.guru/refactoring/smells";
+    public String url = "https://refactoring.guru/refactoring/smells";
 
-    public Smell(int row, int col, String description, String url) {
-        this.row = row;
-        this.col = col;
+    public Smell(Token to, String description, String url) {
+        this.row = to.getLine();
+        this.col = to.getCharPositionInLine();
         this.description = description;
         this.url = url;
     }
 
-    public Smell(int row, int col, String description) {
-        this.row = row;
-        this.col = col;
+    public Smell(Token to, String description) {
+        this.row = to.getLine();
+        this.col = to.getCharPositionInLine();
         this.description = description;
     }
 
     @Override
     public String toString() {
         return "Bad smell found in Line: " + row + ", Column: " + col
-                + "\nDescription: " + description
-                + "\nFor more information: " + url;
+                + "\nDescription: " + description;
     }
 }

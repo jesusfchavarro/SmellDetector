@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.web.WebView?>
+
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -45,65 +59,62 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.25, 0.68" focusTraversable="true" prefWidth="900.0" VBox.vgrow="ALWAYS">
-      <items>
-        <AnchorPane>
-               <children>
-                  <Accordion prefHeight="569.0" prefWidth="227.0">
-                    <panes>
-                      <TitledPane animated="false" text="Graficas">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <StackedBarChart fx:id="varChart" layoutX="1.0" prefHeight="230.0" prefWidth="227.0" title="Uso de las variables">
-                                      <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                      </yAxis>
-                                    </StackedBarChart>
-                                    <BarChart layoutX="3.0" layoutY="230.0" prefHeight="244.0" prefWidth="223.0">
-                                       <xAxis>
-                                          <CategoryAxis side="BOTTOM" />
-                                       </xAxis>
-                                       <yAxis>
-                                          <NumberAxis side="LEFT" />
-                                       </yAxis>
-                                    </BarChart>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                      <TitledPane animated="false" text="Malos olores">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </TitledPane>
-                      <TitledPane animated="false" text="untitled 3">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </TitledPane>
-                    </panes>
-                  </Accordion>
-               </children>
-        </AnchorPane>
-        <ScrollPane prefHeight="569.0" prefWidth="366.0">
-          <content>
-            <AnchorPane id="Content" prefHeight="545.0" prefWidth="380.0">
+      <TabPane fx:id="tabPane" prefHeight="619.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Code">
+               <content>
+                   <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="376.0" prefWidth="900.0">
+                       <ScrollPane fx:id="scrollPane" prefHeight="529.0" prefWidth="446.0">
+                              <content>
+                                  <TextFlow>
+                              <children>
+                                          <TextArea fx:id="textArea" prefHeight="536.0" prefWidth="445.0" wrapText="true">
+                                    <font>
+                                       <Font name="Droid Sans Fallback" size="14.0" />
+                                    </font>
+                                 </TextArea>
+                              </children>
+                                  </TextFlow>
+                              </content>
+                       </ScrollPane>
+                     <SplitPane fx:id="smellsSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                       <items>
+                           <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                              <content>
+                                 <VBox fx:id="smellsLog" prefHeight="292.0" prefWidth="446.0" />
+                              </content>
+                           </ScrollPane>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="285.0" prefWidth="446.0">
+                              <children>
+                                 <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+                              </children>
+                           </AnchorPane>
+                       </items>
+                     </SplitPane>
+                   </SplitPane>
+               </content>
+          </Tab>
+          <Tab text="Charts">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextFlow prefHeight="565.0" prefWidth="378.0">
-                           <children>
-                              <TextArea prefHeight="560.0" prefWidth="376.0" />
-                           </children>
-                        </TextFlow>
+                        <ScrollPane>
+                           <content>
+                              <StackedBarChart fx:id="varChart" blendMode="SRC_ATOP" title="Uso de las variables">
+                                <xAxis>
+                                  <CategoryAxis fx:id="stackBarX" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </StackedBarChart>
+                           </content>
+                        </ScrollPane>
                      </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
-        <AnchorPane />
-      </items>
-    </SplitPane>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
   </children>
 </VBox>

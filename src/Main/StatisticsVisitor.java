@@ -6,18 +6,29 @@ import parser.java8Parser;
 import java.util.HashMap;
 
 public class StatisticsVisitor<T> extends java8BaseVisitor<T> {
-    HashMap<String,Integer> varStats = new HashMap<>();
+    HashMap<String,Integer[]> varUsage;
+
+    public StatisticsVisitor(HashMap<String, Integer[]> varUsage) {
+        this.varUsage = varUsage;
+    }
 
     @Override
-    public T visitExpressionName(java8Parser.ExpressionNameContext ctx) {
-        System.out.println(ctx.getText());
-        java8Parser.AmbiguousNameContext tmp = ctx.ambiguousName();
-        while(tmp.ambiguousName() != null ){
-            tmp = tmp.ambiguousName();
+    public T visitVariableDeclaratorId(java8Parser.VariableDeclaratorIdContext ctx) {
+        String varName = ctx.start.getText();
+        Integer[] t = varUsage.getOrDefault(varName,new Integer[]{0,0});
+        t[0]++;
+        varUsage.put(varName, t);
+        return null;
+    }
+
+    @Override
+    public T visitStatementExpression(java8Parser.StatementExpressionContext ctx) {
+        if(ctx.methodInvocation() == null && ctx.classInstanceCreationExpression() == null){
+            String varName = ctx.start.getText();
+            Integer[] t = varUsage.getOrDefault(varName,new Integer[]{0,0});
+            t[1]++;
+            varUsage.put(varName, t);
         }
-        String varName = tmp == null ? ctx.getText() : tmp.getText();
-        int t = varStats.getOrDefault(tmp.getText(),0);
-        varStats.put(varName, t + 1);
         return visitChildren(ctx);
     }
 
